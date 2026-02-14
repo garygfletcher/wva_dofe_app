@@ -1,15 +1,30 @@
 {
   "expo": {
-    "name": "The-Wartime-Vessels-Association",
-    "slug": "The-Wartime-Vessels-Association",
-    "version": "1.0.0",
+    "name": "WVA",
+    "slug": "wva",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "thewartimevesselsassociation",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "updates": {
+      "url": "https://u.expo.dev/5d61cd7a-abfa-4dbc-8b0c-7cc6bd199bde"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1c2643"
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.gary.fletcher.icon.The-Wartime-Vessels-Association",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +34,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.wva.wva"
     },
     "web": {
       "output": "static",
@@ -27,22 +43,25 @@
     },
     "plugins": [
       "expo-router",
+      "expo-video",
       [
-        "expo-splash-screen",
+        "expo-notifications",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
-          "dark": {
-            "backgroundColor": "#000000"
-          }
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#1d70b8"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5d61cd7a-abfa-4dbc-8b0c-7cc6bd199bde"
+      }
+    },
+    "owner": "wva"
   }
 }

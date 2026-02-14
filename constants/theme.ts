@@ -51,3 +51,13 @@ export const Fonts = Platform.select({
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+
+export const ChronicleFonts = {
+  body: 'EBGaramond_400Regular',
+  bodySemiBold: 'EBGaramond_600SemiBold',
+  heading: 'PlayfairDisplay_700Bold',
+  headingBlack: 'PlayfairDisplay_900Black',
+  headingItalic: 'PlayfairDisplay_700Bold_Italic',
+  blackletter: 'UnifrakturMaguntia_400Regular',
+  typewriter: 'SpecialElite_400Regular',
+} as const;
