@@ -25,6 +25,48 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+## WVA Operational Commands
+
+### 1. Send a push notification test
+Use this to verify an Expo push token is valid and receiving notifications.
+
+```bash
+curl -X POST https://exp.host/--/api/v2/push/send \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "ExponentPushToken[w4wVlbD-05PlhattlSCnHK]",
+    "title": "WVA Test",
+    "body": "Push test from TestFlight build."
+  }'
+```
+
+Expected response (example):
+
+```json
+{"data":{"status":"ok","id":"019c5a3e-a2ae-7077-af4d-e94ace0bd9ed"}}
+```
+
+### 2. Start Metro with a clean cache
+Use this when local bundling is behaving oddly or stale cache is suspected.
+
+```bash
+npx expo start -c
+```
+
+### 3. Run a clean iOS production build with EAS
+Builds iOS using the `production` profile and clears EAS build cache.
+
+```bash
+eas build -p ios --profile production --clear-cache
+```
+
+### 4. Submit iOS build to App Store Connect
+Submits the latest iOS build artifact configured for this project.
+
+```bash
+eas submit -p ios
+```
+
 ## Get a fresh project
 
 When you're ready, run:
