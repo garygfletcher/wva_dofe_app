@@ -17,6 +17,7 @@ import {
   fetchSeaSkillsStatus,
   type SeaSkillsActivity,
 } from '@/lib/sea-skills-status';
+import { subscribeTabRefresh } from '@/lib/tab-refresh';
 
 export default function ExploreScreen() {
   const router = useRouter();
@@ -59,6 +60,12 @@ export default function ExploreScreen() {
 
   useEffect(() => {
     void loadStatus();
+  }, [loadStatus]);
+
+  useEffect(() => {
+    return subscribeTabRefresh('explore', () => {
+      void loadStatus(true);
+    });
   }, [loadStatus]);
 
   const totals = useMemo(() => {

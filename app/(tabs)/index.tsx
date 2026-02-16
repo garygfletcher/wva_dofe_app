@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChronicleFonts } from '@/constants/theme';
 import { useAuth } from '@/contexts/auth-context';
 import { fetchSeaSkillsStatus, type SeaSkillsActivity } from '@/lib/sea-skills-status';
+import { subscribeTabRefresh } from '@/lib/tab-refresh';
 
 const introSlides = [
   {
@@ -42,32 +43,38 @@ export default function HomeScreen() {
 
   const slide = useMemo(() => introSlides[currentSlide], [currentSlide]);
 
-  useEffect(() => {
-    const loadProgrammeMap = async () => {
-      if (!session?.user?.id || !session?.token) {
-        setMapLoading(false);
-        setMapError('Unable to load activities.');
-        return;
-      }
+  const loadProgrammeMap = useCallback(async () => {
+    if (!session?.user?.id || !session?.token) {
+      setMapLoading(false);
+      setMapError('Unable to load activities.');
+      return;
+    }
 
-      setMapLoading(true);
-      setMapError('');
+    setMapLoading(true);
+    setMapError('');
 
-      try {
-        const response = await fetchSeaSkillsStatus({
-          userId: session.user.id,
-          token: session.token,
-        });
-        setProgrammeMap(response.activities);
-      } catch (err) {
-        setMapError(err instanceof Error ? err.message : 'Unable to load activities.');
-      } finally {
-        setMapLoading(false);
-      }
-    };
-
-    void loadProgrammeMap();
+    try {
+      const response = await fetchSeaSkillsStatus({
+        userId: session.user.id,
+        token: session.token,
+      });
+      setProgrammeMap(response.activities);
+    } catch (err) {
+      setMapError(err instanceof Error ? err.message : 'Unable to load activities.');
+    } finally {
+      setMapLoading(false);
+    }
   }, [session?.token, session?.user?.id]);
+
+  useEffect(() => {
+    void loadProgrammeMap();
+  }, [loadProgrammeMap]);
+
+  useEffect(() => {
+    return subscribeTabRefresh('index', () => {
+      void loadProgrammeMap();
+    });
+  }, [loadProgrammeMap]);
 
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
